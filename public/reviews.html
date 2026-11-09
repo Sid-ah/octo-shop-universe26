@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Octo Shop reviews</title>
+  <style>
+    body { font-family: system-ui; background: #0d1117; color: #f0f6fc; max-width: 40rem; margin: 3rem auto; }
+    .stars { color: #d29922; letter-spacing: 2px; }
+    li { border: 1px solid #30363d; border-radius: 8px; padding: .75rem 1rem; margin: .5rem 0; list-style: none; }
+  </style>
+</head>
+<body>
+  <h1>Reviews for <span id="sku">plush</span></h1>
+  <p>Average: <strong id="avg">–</strong></p>
+  <ul id="list"></ul>
+  <script>
+    const sku = new URLSearchParams(location.search).get('sku') || 'plush';
+    document.getElementById('sku').textContent = sku;
+    fetch(`/api/reviews?sku=${encodeURIComponent(sku)}`)
+      .then((r) => r.json())
+      .then(({ average, reviews }) => {
+        document.getElementById('avg').textContent = average ?? 'No reviews yet';
+        for (const r of reviews) {
+          const li = document.createElement('li');
+          li.innerHTML = '<span class="stars"></span> <strong></strong><p></p>';
+          li.querySelector('.stars').textContent = '★'.repeat(r.rating);
+          li.querySelector('strong').textContent = r.author;
+          li.querySelector('p').textContent = r.text;
+          document.getElementById('list').append(li);
+        }
+      });
+  </script>
+</body>
+</html>
