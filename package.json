@@ -1,0 +1,17 @@
+{
+  "name": "octo-shop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Intentionally imperfect demo store for GitHub Universe 2026 demos. DO NOT DEPLOY.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "lodash": "4.17.15"
+  }
+}
