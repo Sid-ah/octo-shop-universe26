@@ -6,6 +6,7 @@ const { searchProducts } = require('./db');
 const { readDoc } = require('./files');
 const { ping } = require('./diagnostics');
 const { renderReceipt } = require('./receipt');
+const { getReviews } = require('./reviews/routes');
 
 function send(res, status, body, type = 'application/json') {
   res.writeHead(status, { 'content-type': type });
@@ -32,6 +33,10 @@ function createServer() {
           return ping(url.searchParams.get('host') || 'localhost', (err, out) => send(res, err ? 500 : 200, { out }));
         case '/api/receipt':
           return send(res, 200, renderReceipt(url.searchParams.get('name'), url.searchParams.get('total'), url.searchParams.get('var')), 'text/plain');
+        case '/api/reviews': {
+          const r = getReviews(q);
+          return send(res, r.status, r.body);
+        }
         default:
           return send(res, 404, { error: 'not found' });
       }
