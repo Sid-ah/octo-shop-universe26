@@ -20,9 +20,7 @@ function cartTotal(items, code) {
   for (const item of items) {
     subtotal += lineTotal(item, code);
   }
-  const rate = discountFor(code);
-  const total = subtotal - subtotal * rate;
-  return Math.round(total * 100) / 100;
+  return Math.round(subtotal * 100) / 100;
 }
 
 module.exports = { cartTotal, discountFor, lineTotal, DISCOUNT_CODES };
